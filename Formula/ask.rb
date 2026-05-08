@@ -1,11 +1,13 @@
 class Ask < Formula
+  include Language::Python::Virtualenv
+
   desc "Natural language CLI that converts queries to shell commands using a local LLM (Ollama)"
   homepage "https://github.com/Sdaas/ask"
   url "https://github.com/Sdaas/ask/archive/refs/tags/v1.0.0.tar.gz"
   sha256 "04f7d979092136c057c77e5097ffac27ec34b4cfd719602e98eeb122c11f05f5"
   license "MIT"
 
-  depends_on "python3"
+  depends_on "python@3.14"
 
   resource "PyYAML" do
     url "https://files.pythonhosted.org/packages/05/8e/961c0007c59b8dd7729d542c61a4d537767a59645b82a0b521206e1e25c2/pyyaml-6.0.3.tar.gz"
