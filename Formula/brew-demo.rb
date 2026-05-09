@@ -114,7 +114,8 @@ class BrewDemo < Formula
     inreplace bin/"demo-shell-client", "__VERSION__", version
 
     # Install a default config file that users can edit to change the port
-    (etc/"demo-server.conf").write <<~EOS
+    # write_unless_exists preserves user edits across brew upgrades
+    (etc/"demo-server.conf").write_unless_exists <<~EOS
       # demo-server configuration
       # Edit this file and run: brew services restart brew-demo
       PORT=8100
