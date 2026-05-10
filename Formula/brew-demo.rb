@@ -3,8 +3,8 @@ class BrewDemo < Formula
 
   desc "Demo CLI apps: REST server, Python client, and shell client"
   homepage "https://github.com/Sdaas/hello-brew"
-  url "https://github.com/Sdaas/hello-brew/archive/refs/tags/v0.0.3.tar.gz"
-  sha256 "94f0c11d3039d102c00ffb15bc80f0b87f6aefa0d22f049dda6cdc5f5e2b8d47"
+  url "https://github.com/Sdaas/hello-brew/archive/refs/tags/v0.0.4.tar.gz"
+  sha256 "9b3ed787f1a46c75ae6668d7d867669fca4a1a019ea7a6d26261332c8df828c0"
   license "MIT"
 
   depends_on "python@3.12"
