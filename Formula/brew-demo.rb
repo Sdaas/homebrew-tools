@@ -7,11 +7,15 @@ class BrewDemo < Formula
   sha256 "9b3ed787f1a46c75ae6668d7d867669fca4a1a019ea7a6d26261332c8df828c0"
   license "MIT"
 
+  depends_on "jq" # required by demo-shell-client
   depends_on "python@3.12"
-  depends_on "rust" => :build  # required for pydantic-core
-  depends_on "jq"              # required by demo-shell-client
 
   # ── demo-server dependencies ──────────────────────────────────────────────
+
+  resource "annotated-doc" do
+    url "https://files.pythonhosted.org/packages/57/ba/046ceea27344560984e26a590f90bc7f4a75b06701f653222458922b558c/annotated_doc-0.0.4.tar.gz"
+    sha256 "fbcda96e87e9c92ad167c2e53839e57503ecfda18804ea28102353485033faa4"
+  end
 
   resource "annotated-types" do
     url "https://files.pythonhosted.org/packages/ee/67/531ea369ba64dcff5ec9c3402f9f51bf748cec26dde048a2f973a4eea7f5/annotated_types-0.7.0.tar.gz"
@@ -136,5 +140,12 @@ class BrewDemo < Formula
     assert_match version.to_s, shell_output("#{bin}/demo-server --version")
     assert_match version.to_s, shell_output("#{bin}/demo-python-client --version")
     assert_match version.to_s, shell_output("#{bin}/demo-shell-client --version")
+
+    port = free_port
+    pid = fork { exec bin/"demo-server", "--port", port.to_s }
+    sleep 2
+    assert_match "\"status\":\"ok\"", shell_output("curl -sf http://127.0.0.1:#{port}/health")
+  ensure
+    Process.kill("TERM", pid) if pid
   end
 end
