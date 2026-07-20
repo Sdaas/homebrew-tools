@@ -9,7 +9,9 @@ class SdaasTools < Formula
   depends_on "sdaas/tools/decrypt-pdf"
 
   def install
-    (prefix/"README.md").write "Meta-formula for sdaas tools.\n"
+    # Meta-formula ships no binaries; write a doc into a standard subdirectory
+    # so Homebrew does not reject the keg as an "empty installation".
+    (pkgshare/"README.md").write "Meta-formula that installs all sdaas command-line tools.\n"
   end
 
   test do
