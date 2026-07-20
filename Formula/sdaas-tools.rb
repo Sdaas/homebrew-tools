@@ -2,9 +2,7 @@ class SdaasTools < Formula
   desc "Meta-package that installs all sdaas command-line tools"
   homepage "https://github.com/Sdaas/homebrew-tools"
   url "https://github.com/Sdaas/homebrew-tools/archive/refs/tags/v1.0.0.tar.gz"
-  # Placeholder sha256 — set to the real archive digest when the meta-formula is
-  # released (see Section 5f). Kept as valid 64-char hex so `brew style` passes.
-  sha256 "0000000000000000000000000000000000000000000000000000000000000000"
+  sha256 "4eb94b72397ba6d4787a1eb739f2692b2b10201a2c57f1af41f55e4a6053e17e"
   license "MIT"
 
   depends_on "sdaas/tools/ask"
