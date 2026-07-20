@@ -3,28 +3,37 @@ name: Brew Test
 on:
   push:
     branches: [main]
+  pull_request:
 
 jobs:
   brew-test:
     runs-on: macos-latest
 
     steps:
-      - uses: actions/checkout@v4.2.2
-
       - name: Set up Homebrew
         uses: Homebrew/actions/setup-homebrew@master
 
       - name: Tap this repo
-        run: brew tap sdaas/tap https://github.com/Sdaas/homebrew-tap
+        run: brew tap sdaas/tools https://github.com/Sdaas/homebrew-tools
 
-      - name: Install brew-demo
-        run: brew install brew-demo
-
-      - name: Run brew test
-        run: brew test brew-demo
-
-      - name: Smoke test binaries
+      - name: Style + audit all formulas
         run: |
-          demo-server --version
-          demo-python-client --version
-          demo-shell-client --version
+          brew style sdaas/tools
+          brew audit --tap sdaas/tools --strict
+
+      - name: Install and test each tool
+        run: |
+          for f in ask decrypt-pdf; do
+            echo "::group::$f"
+            brew install --build-from-source "sdaas/tools/$f"
+            brew test "sdaas/tools/$f"
+            echo "::endgroup::"
+          done
+
+      - name: Smoke test the tool binaries
+        run: |
+          ask --version
+          decrypt-pdf --version
+
+      - name: Install the meta-formula (pulls in all tools)
+        run: brew install sdaas/tools/sdaas-tools
